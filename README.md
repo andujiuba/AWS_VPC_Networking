@@ -9,6 +9,7 @@
 
 ## Internet Gateway
 ![](internet_gateway.jpg)
+
 **What is an Internet Gateway?**
 - Can transfer communications betweeen an enterprise network and the internet
 - Allows internet access into VPC
