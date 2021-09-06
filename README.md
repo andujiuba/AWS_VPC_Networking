@@ -28,7 +28,7 @@
 - Determines direction of network traffic from subnet or gateway
 
 ## Network Access Control List (NACLs)
-![](NACLS.png)
+![](NACLs.png)
 
 - These are stateless - we have to explicitly allow inbound and outbound rules
 - They give an added layer of security at subnet level
