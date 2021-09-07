@@ -107,8 +107,8 @@ Subnet Associations
 ## Creating Public and Private NACLs
 
 - public
-
-| Rule | Source IP | Protocol | Port       | Allow/Deny |
+`rule, type, protocol, port range, source IP, Allow/deny`
+| Rule | Source IP | Protocol | Port Range | Allow/Deny |
 |------|-----------|----------|------------|------------|
 |  100 | 0.0.0.0/0 | TCP      | 80         | ALLOW      | 
 |  110 | My IP     | TCP      | 22         | ALLOW      |
@@ -116,8 +116,23 @@ Subnet Associations
 |   *  | 0.0.0.0/0 | all      | all        | DENY       |
 
 
-OUTBOUND: 110 dest: PRIV SUBNET
+OUTBOUND:
+100, http, tcp, 80, 0
+110, cus tcp, 6, 27017, 10.101.2.0/24(PRIV SUBNET)
+120, cu, 6, 1024-65535, 0
+`*` etc
+allow port 80!!
 - private
+
+IN:
+100, Custom TCP, TCP (6), 27017, 10.101.1.0/24
+110, SSH (22), 6, 22, my ip/32
+120, cu tcp, 6, 1024-65535, 0.0.0.0/0
+`*` all traffic, all, all, 0.0.0.0/0 deny
+OUT:
+100 80 6 80 0.0.0.0/0
+120 cus 6 1024-65535 0
+`*` all etc.
 
 - umbrella
 INBOUND: 100 HTTP 0.0.0.0/0
@@ -133,8 +148,13 @@ OUTBOUND: 100 ALL
 ## Running Instance w AMIs
 
 - launch amis
+(for private db, change setting to disable access to public IPv4)
+DO NOT NEED TO USE PROVISION FILE - NOT CONNECTED TO INTERNET
 - enter app instance
 - export DB_HOST (remember to change IP address)
 - enter app folder
 - node seeds/seed.js
 - npm start
+
+
+ link to s3 readme
